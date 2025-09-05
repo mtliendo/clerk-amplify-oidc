@@ -1,0 +1,15 @@
+diff --git a/node_modules/@aws-amplify/api-graphql/dist/esm/internals/graphqlAuth.mjs b/node_modules/@aws-amplify/api-graphql/dist/esm/internals/graphqlAuth.mjs
+index 3102ed2..ce3bb25 100644
+--- a/node_modules/@aws-amplify/api-graphql/dist/esm/internals/graphqlAuth.mjs
++++ b/node_modules/@aws-amplify/api-graphql/dist/esm/internals/graphqlAuth.mjs
+@@ -25,6 +25,10 @@ async function headerBasedAuth(amplify, authMode, apiKey, additionalHeaders = {}
+         }
+         case 'oidc':
+         case 'userPool': {
++            if (typeof additionalHeaders === "object" && additionalHeaders.Authorization) {
++                headers = { Authorization: additionalHeaders.Authorization };
++                break;
++            }
+             let token;
+             try {
+                 token = (await amplify.Auth.fetchAuthSession()).tokens?.accessToken.toString();
